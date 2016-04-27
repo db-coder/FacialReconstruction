@@ -23,19 +23,19 @@ main(int argc, char** argv)
 	// Filter out all points with Z values not in the [0-2] range.
 
 	// filter.setFilterFieldName("x");
-	// filter.setFilterLimits(-0.1, 0.1);
+	// filter.setFilterLimits(-0.2, 0.1);
 
 	// filter.setFilterFieldName("y");
-	// filter.setFilterLimits(-0.4, 0.05);
+	// filter.setFilterLimits(-0.4, -0.05);
  
 	filter.setFilterFieldName("z");
-	filter.setFilterLimits(-0.3, 1.0);
+	filter.setFilterLimits(0.5,0.8);
 	
 	filter.filter(*filteredCloud);
 
-	stringstream stream;
-	stream << "inputCloud_matty6_trimmed.pcd";
-	string filename = stream.str();
+	// stringstream stream;
+	// stream << "inputCloud_matty6_trimmed.pcd";
+	string filename = argv[2];
 	if (pcl::io::savePCDFile(filename, *filteredCloud, true) == 0)
 	{
 		cout << "Saved " << filename << "." << endl;

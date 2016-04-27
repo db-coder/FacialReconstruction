@@ -23,14 +23,20 @@ int
   }
   
   pcl::IterativeClosestPoint<pcl::PointXYZRGB, pcl::PointXYZRGB> icp;
-  icp.setInputCloud(cloud_in);
+  icp.setInputSource(cloud_in);
   icp.setInputTarget(cloud_out);
   pcl::PointCloud<pcl::PointXYZRGB> Final;
+  // Set the max correspondence distance to 5cm (e.g., correspondences with higher distances will be ignored)
+  icp.setMaxCorrespondenceDistance (1.0);
+  // Set the maximum number of iterations (criterion 1)
+  icp.setMaximumIterations (50000);
+  // Set the transformation epsilon (criterion 2)
+  icp.setTransformationEpsilon (1e-8);
+  // Set the euclidean distance difference epsilon (criterion 3)
+  icp.setEuclideanFitnessEpsilon (1);
   icp.align(Final);
 
-  stringstream stream;
-  stream << "output1Cloud_malav5.pcd";
-  string filename = stream.str();
+  string filename = argv[3];
   if (pcl::io::savePCDFile(filename, Final, true) == 0)
   {
     cout << "Saved " << filename << "." << endl;
